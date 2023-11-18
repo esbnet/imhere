@@ -13,6 +13,10 @@ export default function Home() {
     alert("oi");
   }
 
+  function handleParticipantRemove(name: string) {
+    alert("remove : " + name);
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.eventName}>Show do RHCP </Text>
@@ -34,8 +38,22 @@ export default function Home() {
           <Text style={styles.buttonText}>+</Text>
         </TouchableOpacity>
       </View>
-      <Participant/>
-      <Participant/>
+      <Participant
+        name="Edmilson Soares Bezerra"
+        onRemove={() => handleParticipantRemove("Edmilson")}
+      />
+      <Participant
+        name="Cleiton Bezerra"
+        onRemove={() => handleParticipantRemove("Cleiton")}
+      />
+      <Participant
+        name="Sabrina Bezerra"
+        onRemove={() => handleParticipantRemove("Sabrina")}
+      />
+      <Participant
+        name="Cleide Bezerra"
+        onRemove={() => handleParticipantRemove("Cleide")}
+      />
     </View>
   );
 }
