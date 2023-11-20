@@ -1,8 +1,8 @@
+import { Entypo } from "@expo/vector-icons";
 import {
-  GestureResponderEvent,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { styles } from "./styles";
 
@@ -12,10 +12,6 @@ type ParticipantProps = {
 };
 
 export default function Participant({ name, onRemove }: ParticipantProps) {
-  function handleParticipantAdd(event: GestureResponderEvent): void {
-    throw new Error("Function not implemented.");
-  }
-
   return (
     <View style={styles.container}>
       <Text style={styles.name}>{name}</Text>
@@ -24,7 +20,9 @@ export default function Participant({ name, onRemove }: ParticipantProps) {
         onPress={() => onRemove(name)}
         activeOpacity={0.7}
       >
-        <Text style={styles.buttonText}>-</Text>
+        <Text style={styles.buttonText}>
+          <Entypo name="trash" size={24} color="#e23c44" />
+        </Text>
       </TouchableOpacity>
     </View>
   );

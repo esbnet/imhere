@@ -1,5 +1,7 @@
+import React, { useState } from "react";
 import {
-  GestureResponderEvent,
+  Alert,
+  FlatList,
   Text,
   TextInput,
   TouchableOpacity,
@@ -8,13 +10,37 @@ import {
 import Participant from "../../components/Participant";
 import { styles } from "./styles";
 
+import { Ionicons } from '@expo/vector-icons';
+
 export default function Home() {
-  function handleParticipantAdd(event: GestureResponderEvent): void {
-    alert("oi");
+  const [participants, setParticipants] = useState<string[]>([]);
+  const [participantName, setParticipantName] = useState("");
+
+  function handleParticipantAdd() {
+    if (participants.includes(participantName)) {
+      return Alert.alert(
+        "Participante ja existe",
+        "Já existe um partipante chamado " + participantName
+      );
+    }
+    setParticipants((prevState) => [...prevState, participantName]);
+    setParticipantName("");
   }
 
   function handleParticipantRemove(name: string) {
-    alert("remove : " + name);
+    Alert.alert("Remover", `Remover o participante ${name}?`, [
+      {
+        text: "Sim",
+        onPress: () =>
+          setParticipants((prevState) =>
+            prevState.filter((participant) => participant !== name)
+          ),
+      },
+      {
+        text: "Não",
+        style: "cancel",
+      },
+    ]);
   }
 
   return (
@@ -28,32 +54,38 @@ export default function Home() {
           placeholder="Nome do participante"
           placeholderTextColor={"#6B6B6B"}
           keyboardType="numeric"
+          onChangeText={setParticipantName}
+          value={participantName}
         />
 
         <TouchableOpacity
           style={styles.button}
-          onPress={handleParticipantAdd}
           activeOpacity={0.7}
+          onPress={handleParticipantAdd}
         >
-          <Text style={styles.buttonText}>+</Text>
+          <Text style={styles.buttonText}>
+            <Ionicons name="ios-person-add" size={24} color="#fff" />
+          </Text>
         </TouchableOpacity>
       </View>
-      <Participant
-        name="Edmilson Soares Bezerra"
-        onRemove={() => handleParticipantRemove("Edmilson")}
-      />
-      <Participant
-        name="Cleiton Bezerra"
-        onRemove={() => handleParticipantRemove("Cleiton")}
-      />
-      <Participant
-        name="Sabrina Bezerra"
-        onRemove={() => handleParticipantRemove("Sabrina")}
-      />
-      <Participant
-        name="Cleide Bezerra"
-        onRemove={() => handleParticipantRemove("Cleide")}
-      />
+
+      <FlatList
+        data={participants}
+        keyExtractor={(item) => item}
+        renderItem={({ item }) => (
+          <Participant
+            key={item}
+            name={item}
+            onRemove={() => handleParticipantRemove(item)}
+          />
+        )}
+        ListEmptyComponent={
+          <Text style={styles.listEmptyText}>
+            Ninguém chegou no evento ainda? Adicione participantes a sua lista
+            de presença.
+          </Text>
+        }
+      ></FlatList>
     </View>
   );
 }

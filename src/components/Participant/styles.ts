@@ -11,15 +11,15 @@ export const styles = StyleSheet.create({
   },
   name: {
     flex: 1,
-    color: "#FFF",
+    color: "#29CC5A",
     fontSize: 16,
     marginLeft: 16
   },
   button: {
-    backgroundColor: "#e23c44",
+    // backgroundColor: "#e23c44",
     height: 56,
     width: 56,
-    borderRadius: 5,
+    borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
   },
